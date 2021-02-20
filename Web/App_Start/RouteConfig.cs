@@ -14,7 +14,9 @@ namespace Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Private"    
+                name: "Private",
+                url: "private",
+                defaults: new { controller="Home", action= "Private"}
             );
 
             routes.MapRoute(
