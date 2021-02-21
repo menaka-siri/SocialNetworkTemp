@@ -1,42 +1,80 @@
 ﻿<!DOCTYPE html>
+
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
+    <title>SocialNetwork</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta name="description" content="">
+    <meta name="author" content="Filip Ekberg">
+
+    <!-- BOOTSTRAP TEMPLATE: http://getbootstrap.com/2.3.2/examples/marketing-narrow.html -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-top: 20px;
+            padding-bottom: 40px;
+        }
+
+        .container-narrow {
+            margin: 0 auto;
+            max-width: 700px;
+        }
+
+            .container-narrow > hr {
+                margin: 30px 0;
+            }
+
+        .jumbotron {
+            margin: 60px 0;
+            text-align: center;
+        }
+
+            .jumbotron h1 {
+                font-size: 72px;
+                line-height: 1;
+            }
+
+            .jumbotron .btn {
+                font-size: 21px;
+                padding: 14px 24px;
+            }
+
+        .marketing {
+            margin: 60px 0;
+        }
+
+            .marketing p + h4 {
+                margin-top: 28px;
+            }
+    </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+    <div class="container-narrow">
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+        <div class="masthead">
+            <ul class="nav nav-pills pull-right">
+                <li><a href="/">Home</a></li>
+                <li><a href="/private">Profile</a></li>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+    <li><a href="/logout">Logout</a></li>}
+            </ul>
+            <h3 class="muted">SocialNetwork</h3>
+        </div>
+
+        <hr>
+
+        @RenderBody()
+
+        <hr>
+
+        <div class="footer">
+            <p>&copy; SocialNetwork 1337</p>
+        </div>
+
+    </div>
 </body>
 </html>
