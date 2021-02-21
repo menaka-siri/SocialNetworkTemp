@@ -55,7 +55,7 @@ namespace SocialNetwork.OAuth
                     {
                         new Secret("secret".Sha256())
                     },
-                    ClientName = "SocailNetwork",
+                    ClientName = "SocialNetworkAPI",
                     Flow = Flows.ResourceOwner,
                     AllowedScopes = new List<string>
                     {
@@ -71,7 +71,7 @@ namespace SocialNetwork.OAuth
                     {
                         new Secret("secret".Sha256())
                     },
-                    ClientName = "SocailNetwork",
+                    ClientName = "SociallNetworkWeb",
                     Flow = Flows.Implicit,
                     AllowedScopes = new List<string>
                     {
@@ -81,7 +81,7 @@ namespace SocialNetwork.OAuth
                     },
                     RedirectUris = new List<string>
                     {
-                        "http://localhost:3468/private"
+                        "http://localhost:57919/"
                     },
                     Enabled = true
                 }
