@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork.OAuth", "Soci
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{62C26E2A-CBEF-4FE0-B607-1A08AAF6056C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork.Android", "SocialNetwork.Android\SocialNetwork.Android.csproj", "{4853FEA9-C0FA-4486-A9B3-AAA7329DDD03}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,12 @@ Global
 		{62C26E2A-CBEF-4FE0-B607-1A08AAF6056C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62C26E2A-CBEF-4FE0-B607-1A08AAF6056C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62C26E2A-CBEF-4FE0-B607-1A08AAF6056C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4853FEA9-C0FA-4486-A9B3-AAA7329DDD03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4853FEA9-C0FA-4486-A9B3-AAA7329DDD03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4853FEA9-C0FA-4486-A9B3-AAA7329DDD03}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4853FEA9-C0FA-4486-A9B3-AAA7329DDD03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4853FEA9-C0FA-4486-A9B3-AAA7329DDD03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4853FEA9-C0FA-4486-A9B3-AAA7329DDD03}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
