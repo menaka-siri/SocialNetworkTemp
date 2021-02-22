@@ -83,6 +83,37 @@ namespace SocialNetwork.OAuth
                     {
                         "http://localhost:57919/"
                     },
+                    PostLogoutRedirectUris = new List<string>
+                    {
+                        "http://localhost:57919/"
+                    },
+                    Enabled = true
+                },
+                new Client
+                {
+                    ClientId = "socialnetwork_code",
+                    ClientSecrets = new List<Secret>
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    ClientName = "SociallNetworkWeb",
+                    Flow = Flows.AuthorizationCode,
+                    AllowedScopes = new List<string>
+                    {
+                        Constants.StandardScopes.OpenId,
+                        Constants.StandardScopes.Profile,
+                        "read"
+                    },
+                    RedirectUris = new List<string>
+                    {
+                        "http://localhost:57919",
+                        "http://localhost:57919/",
+                        "http://localhost:57919/home/authorizationcallback"
+                    },
+                    PostLogoutRedirectUris = new List<string>
+                    {
+                        "http://localhost:57919/"
+                    },
                     Enabled = true
                 }
             };
