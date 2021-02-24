@@ -16,19 +16,21 @@ namespace Web.Controllers
     {
         public ActionResult Index()
         {
-            if(User.Identity.IsAuthenticated)
-            {
-                var claimsPrincipal = User as ClaimsPrincipal;
-                return Content(claimsPrincipal.FindFirst("access_token").Value);
-            }
-            var url = "http://localhost:44335/connect/authorize" +
-                      "?client_id=socialnetwork_code" +
-                      "&redirect_uri=http://localhost:57919/home/authorizationcallback" +
-                      "&response_type=code" +
-                      "&scope=openid+profile" +
-                      "&response_mode=form_post";
+            //if(User.Identity.IsAuthenticated)
+            //{
+            //    var claimsPrincipal = User as ClaimsPrincipal;
+            //    return Content(claimsPrincipal.FindFirst("access_token").Value);
+            //}
+            //var url = "http://localhost:44335/connect/authorize" +
+            //          "?client_id=socialnetwork_code" +
+            //          "&redirect_uri=http://localhost:57919/home/authorizationcallback" +
+            //          "&response_type=code" +
+            //          "&scope=openid+profile" +
+            //          "&response_mode=form_post";
 
-            return Redirect(url);
+            //return Redirect(url);
+
+            return View();
         }
 
         public ActionResult AuthorizationCallBack(string code, string state, string error)

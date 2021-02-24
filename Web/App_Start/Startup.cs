@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Thinktecture.IdentityModel.Clients;
 
 [assembly: OwinStartup(typeof(Web.App_Start.Startup))]
 
@@ -29,44 +30,50 @@ namespace Web.App_Start
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie
             });
 
-            //app.UseOpenIdConnectAuthentication(new OpenIdConnectAuthenticationOptions
-            //{
-            //    ClientId = "socialnetwork_implicit",
-            //    Authority = "http://localhost:44335",
-            //    RedirectUri = "http://localhost:57919/",
-            //    ResponseType = "token id_token",
-            //    Scope = "openid profile",
-            //    SignInAsAuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-            //    PostLogoutRedirectUri = "http://localhost:57919/",
+            app.UseOpenIdConnectAuthentication(new OpenIdConnectAuthenticationOptions
+            {
+                ClientId = "socialnetwork_code",
+                Authority = "http://localhost:44335",
+                RedirectUri = "http://localhost:57919/",
+                ResponseType = "code id_token",
+                Scope = "openid profile",
+                SignInAsAuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                PostLogoutRedirectUri = "http://localhost:57919/",
 
-            //    Notifications = new OpenIdConnectAuthenticationNotifications
-            //    {
-            //        SecurityTokenValidated = notification =>
-            //        {
-            //            var identity = notification.AuthenticationTicket.Identity;
-            //            identity.AddClaim(new Claim("id_token", 
-            //                notification.ProtocolMessage.IdToken));
-            //            identity.AddClaim(new Claim("access_token",
-            //                notification.ProtocolMessage.AccessToken));
+                Notifications = new OpenIdConnectAuthenticationNotifications
+                {
+                    AuthorizationCodeReceived =  async notification =>
+                    {
+                        var requestResponse = await OidcClient.CallTokenEndpointAsync(
+                            new Uri("http://localhost:44335/connect/token"),
+                            new Uri("http://localhost:57919/"),
+                            notification.Code,
+                            "socialnetwork_code",
+                            "secret");
 
-            //            notification.AuthenticationTicket = 
-            //            new AuthenticationTicket(identity, notification.AuthenticationTicket.Properties);
-            //            return Task.FromResult(0);
-            //        },
-            //        RedirectToIdentityProvider = notification =>
-            //        {
-            //            if(notification.ProtocolMessage.RequestType != OpenIdConnectRequestType.LogoutRequest)
-            //            {
-            //                return Task.FromResult(0);
-            //            }
+                        var identity = notification.AuthenticationTicket.Identity;
 
-            //            notification.ProtocolMessage.IdTokenHint =
-            //                notification.OwinContext.Authentication.User.FindFirst("id_token").Value;
+                        identity.AddClaim(new Claim("access_token", requestResponse.AccessToken));
+                        identity.AddClaim(new Claim("id_token", requestResponse.IdentityToken));
+                        identity.AddClaim(new Claim("refresh_token", requestResponse.RefreshToken));
 
-            //            return Task.FromResult(0);
-            //        }
-            //    }
-            //});
+                        notification.AuthenticationTicket = new AuthenticationTicket(
+                            identity, notification.AuthenticationTicket.Properties);
+                    },
+                    RedirectToIdentityProvider = notification =>
+                    {
+                        if (notification.ProtocolMessage.RequestType != OpenIdConnectRequestType.LogoutRequest)
+                        {
+                            return Task.FromResult(0);
+                        }
+
+                        notification.ProtocolMessage.IdTokenHint =
+                            notification.OwinContext.Authentication.User.FindFirst("id_token").Value;
+
+                        return Task.FromResult(0);
+                    }
+                }
+            });
         }
     }
 }

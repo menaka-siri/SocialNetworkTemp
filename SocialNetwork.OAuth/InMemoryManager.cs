@@ -97,18 +97,17 @@ namespace SocialNetwork.OAuth
                         new Secret("secret".Sha256())
                     },
                     ClientName = "SociallNetworkWeb",
-                    Flow = Flows.AuthorizationCode,
+                    Flow = Flows.Hybrid,
                     AllowedScopes = new List<string>
                     {
                         Constants.StandardScopes.OpenId,
                         Constants.StandardScopes.Profile,
+                        Constants.StandardScopes.OfflineAccess,
                         "read"
                     },
                     RedirectUris = new List<string>
                     {
-                        "http://localhost:57919",
-                        "http://localhost:57919/",
-                        "http://localhost:57919/home/authorizationcallback"
+                        "http://localhost:57919/"
                     },
                     PostLogoutRedirectUris = new List<string>
                     {
