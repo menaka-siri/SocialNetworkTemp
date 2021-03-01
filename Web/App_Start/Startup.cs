@@ -27,53 +27,11 @@ namespace Web.App_Start
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                LoginPath = new PathString("/home/login")
             });
 
-            app.UseOpenIdConnectAuthentication(new OpenIdConnectAuthenticationOptions
-            {
-                ClientId = "socialnetwork_code",
-                Authority = "http://localhost:44335",
-                RedirectUri = "http://localhost:57919/",
-                ResponseType = "code id_token",
-                Scope = "openid profile",
-                SignInAsAuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                PostLogoutRedirectUri = "http://localhost:57919/",
-
-                Notifications = new OpenIdConnectAuthenticationNotifications
-                {
-                    AuthorizationCodeReceived =  async notification =>
-                    {
-                        var requestResponse = await OidcClient.CallTokenEndpointAsync(
-                            new Uri("http://localhost:44335/connect/token"),
-                            new Uri("http://localhost:57919/"),
-                            notification.Code,
-                            "socialnetwork_code",
-                            "secret");
-
-                        var identity = notification.AuthenticationTicket.Identity;
-
-                        identity.AddClaim(new Claim("access_token", requestResponse.AccessToken));
-                        identity.AddClaim(new Claim("id_token", requestResponse.IdentityToken));
-                        identity.AddClaim(new Claim("refresh_token", requestResponse.RefreshToken));
-
-                        notification.AuthenticationTicket = new AuthenticationTicket(
-                            identity, notification.AuthenticationTicket.Properties);
-                    },
-                    RedirectToIdentityProvider = notification =>
-                    {
-                        if (notification.ProtocolMessage.RequestType != OpenIdConnectRequestType.LogoutRequest)
-                        {
-                            return Task.FromResult(0);
-                        }
-
-                        notification.ProtocolMessage.IdTokenHint =
-                            notification.OwinContext.Authentication.User.FindFirst("id_token").Value;
-
-                        return Task.FromResult(0);
-                    }
-                }
-            });
+            
         }
     }
 }

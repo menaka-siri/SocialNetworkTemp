@@ -60,6 +60,8 @@ namespace SocialNetwork.OAuth
                     AllowedScopes = new List<string>
                     {
                         Constants.StandardScopes.OpenId,
+                        Constants.StandardScopes.Profile,
+                        Constants.StandardScopes.OfflineAccess,
                         "read"
                     },
                     Enabled = true
